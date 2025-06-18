@@ -1,2 +1,32 @@
-# Venv(Python Virtual Environment)
-.venv
+# Byte-compiled / optimized / DLL files
+**/__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment folder
+venv/
+.env/
+.envrc/
+
+# Django specific
+db.sqlite3
+/media
+/static
+
+# IDE files
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Python egg info
+*.egg-info/
+dist/
+build/

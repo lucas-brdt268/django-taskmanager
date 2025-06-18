@@ -40,6 +40,8 @@ INSTALLED_APPS = [
 
     # Register app
     'core',
+    # For better form rendering
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
