@@ -35,7 +35,13 @@ def signup_view(request):
 
         # Render the signup template with the blank form data
         return render(request, 'signup.html', {'form': form})
-    
+
+@login_required
+def task_list(request):
+    # Show task list
+    tasks = Task.objects.filter(user=request.user)
+    return render(request, 'task_list.html', {'tasks': tasks})
+
 @login_required
 def task_create(request):
     # Create a task
