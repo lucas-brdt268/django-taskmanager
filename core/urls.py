@@ -6,6 +6,11 @@ urlpatterns = [
     # Home
     path('', views.home, name='home'),
 
+    #################
+    # '/' must follows 
+    # 'auth/' and 'tasks/'
+    #################
+
     # Auth
     path('signup/', views.signup_view, name='signup'),
     path('login/', auth_views.LoginView.as_view(template_name='auth/login.html'), name='login'),
@@ -14,6 +19,6 @@ urlpatterns = [
     # Task URLs
     path('tasks/', views.task_list, name='task_list'),
     path('tasks/create/', views.task_create, name='task_create'),
-    path('tasks/<int:pk>/update', views.task_update, name='task_update'),
-    path('tasks/<int:pk>/delete', views.task_delete, name='task_delete'),
+    path('tasks/<int:pk>/update/', views.task_update, name='task_update'),
+    path('tasks/<int:pk>/delete/', views.task_delete, name='task_delete'),
 ]
