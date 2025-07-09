@@ -1,4 +1,7 @@
 from django import forms
+from django.urls import reverse
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Layout, Submit, HTML, Div
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from .models import Task
@@ -18,9 +21,9 @@ class SignUpForm(UserCreationForm):
     #   email
 
     email = forms.EmailField(
-        required=True,
-        help_text="Required. Enter a valid email address.",         # Add help text
-        widget=forms.EmailInput(attrs={'class': 'form-contrl'})     # Add widget, that contorols how the form filed is rendered as HTML
+            required=True,
+            help_text="Required. Enter a valid email address.",         # Add help text
+            widget=forms.EmailInput(attrs={'class': 'form-contrl'})     # Add widget, that contorols how the form filed is rendered as HTML
         )
 
     class Meta:
@@ -38,7 +41,7 @@ class SignUpForm(UserCreationForm):
         # Custom validation to ensure email is unique
 
         email = self.cleaned_data.get('email')
-        if User.object.filter(email=email).exists():
+        if User.objects.filter(email=email).exists():
             raise forms.ValidationError('This email address is alreay in use.')
         return email
         
@@ -49,6 +52,11 @@ class SignUpForm(UserCreationForm):
 
         self.fields['password1'].widget.attrs.update({'class': 'form-control'})
         self.fields['password2'].widget.attrs.update({'class': 'form-control'})
+
+        self.helper = FormHelper()
+        self.helper.form_method = 'post'  # Set form method to POST
+        self.helper.form_action = reverse('signup')  # Set form action to the signup URL
+        self.helper.add_input(Submit('submit', 'Sign Up', css_class='btn btn-success mt-3'))  # Add a submit button with Bootstrap styling
 
 class TaskForm(forms.ModelForm):
     # Form for creating and updating a task
@@ -62,10 +70,11 @@ class TaskForm(forms.ModelForm):
         # Defines the model and fields
 
         model = Task
-        fields = ('title', 'description', 'completed')
+        fields = ('id', 'title', 'description', 'completed')
 
         # Custom widgets
         widgets = {
+            'id': forms.HiddenInput(),  # Hidden field for the task ID
             'title': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'Enter task title',
@@ -94,6 +103,21 @@ class TaskForm(forms.ModelForm):
         self.fields['title'].help_text = 'Enter a short descriptive title'
         self.fields['description'].help_text = 'Add details about your task'
 
+        self.helper = FormHelper()
+        self.helper.form_method = 'post'  # Set form method to POST
+        self.helper.form_action = reverse('task_create')
+        self.helper.layout = Layout(
+            'id',  # Add hidden ID field
+            'title',  # Add title field
+            'description',  # Add description field
+            'completed',  # Add completed checkbox
+            HTML('<hr>'),  # Add a horizontal line for separation
+            Div(
+                Submit('submit', 'Save', css_class='btn btn-primary'),
+                HTML('<a href="{}" class="btn btn-secondary">Cancel</a>'.format(reverse('task_list'))),
+                css_class='mt-3',
+            )
+        )
     def clean_title(self):
         # Custom validation for the title field
         title = self.cleaned_data.get('title')
