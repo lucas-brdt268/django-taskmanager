@@ -22,7 +22,7 @@
                 </div>
                 <div>
                     <a href="{% url "task_update" task.pk %}" class="btn btn-sm btn-outline-primary">Edit</a>
-                    <a href="{% url "task_delete task.pk" %}" class="btn btn-sm btn-outline-danger">Delete</a>
+                    <a href="{% url "task_delete" task.pk %}" class="btn btn-sm btn-outline-danger">Delete</a>
                 </div>
             </li>
             {% empty %}

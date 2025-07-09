@@ -5,7 +5,7 @@
     <h2>Login</h2>
     <form method="post">
         {% csrf_token %}
-        {{ form|crispy }}
+        {% crispy form 'bootstrap5' %}
         <button type="submit" class="btn btn-primary mt-3">Login</button>
     </form>
 {% endblock content %}
