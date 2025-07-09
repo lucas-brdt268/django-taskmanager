@@ -4,8 +4,9 @@
 {% block content %}
     <h2>Login</h2>
     <form method="post">
+        {% comment %} {% crispy form 'bootstrap5' %} {% endcomment %}
         {% csrf_token %}
-        {% crispy form 'bootstrap5' %}
+        {{ form|crispy }}
         <button type="submit" class="btn btn-primary mt-3">Login</button>
     </form>
 {% endblock content %}
