@@ -70,11 +70,10 @@ class TaskForm(forms.ModelForm):
         # Defines the model and fields
 
         model = Task
-        fields = ('id', 'title', 'description', 'completed')
+        fields = ('title', 'description', 'completed')
 
         # Custom widgets
         widgets = {
-            'id': forms.HiddenInput(),  # Hidden field for the task ID
             'title': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'Enter task title',
@@ -105,9 +104,9 @@ class TaskForm(forms.ModelForm):
 
         self.helper = FormHelper()
         self.helper.form_method = 'post'  # Set form method to POST
-        self.helper.form_action = reverse('task_create')
+        # self.helper.form_action = reverse('task_create')
+        # self.helper.form_action = reverse('task_update')
         self.helper.layout = Layout(
-            'id',  # Add hidden ID field
             'title',  # Add title field
             'description',  # Add description field
             'completed',  # Add completed checkbox
