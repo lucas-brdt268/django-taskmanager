@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     'crispy_bootstrap5',
 ]
 
-CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
+CRISPY_ALLOWED_TEMPLATE_PACKS = ['bootstrap5']
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
 # CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
@@ -131,5 +131,6 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# For crispy
-CRISPY_TEMPLATE_PACK = 'bootstrap4'
+# For built-in LoginView
+LOGIN_REDIRECT_URL = '/tasks/'      # default: /accounts/profile/
+LOGOUT_REDIRECT_URL = '/'           # default: /accounts/login/
