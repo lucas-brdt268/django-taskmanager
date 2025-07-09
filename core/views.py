@@ -33,8 +33,10 @@ def signup_view(request):
         # Create a blank form
         form = SignUpForm()
 
-        # Render the signup template with the blank form data
-        return render(request, 'signup.html', {'form': form})
+    # Render the signup template with 
+    # the blank form data when handling GET request,
+    # old form data when the form POST request is not valid
+    return render(request, 'auth/signup.html', {'form': form})
 
 @login_required
 def task_list(request):
@@ -96,6 +98,7 @@ def task_update(request, pk):
         if(form.is_valid):
             # Save updated task
             form.save()
+            # Redirect to the task list view
             return redirect('task_list')
         
     # For GET
@@ -106,10 +109,11 @@ def task_update(request, pk):
     # Render the form template when
     #   - form POST request is not valid
     #   - GET request is handled
-    redirect(request, 'task_form.html', {'form': form})
+    return render(request, 'task_form.html', {'form': form, 'object': task})
 
 @login_required
 def task_delete(request, pk):
+    print('k1')
     # Delete an task
     #
     # Parameters:
@@ -123,7 +127,7 @@ def task_delete(request, pk):
         # Only delete on POST (confirmation)
         task.delete()
         return redirect('task_list')
-    
+    print('k2')
     # For GET
-    return redirect(request, 'task_confirm_delete.html', {'task': task})
+    return render(request, 'task_confirm_delete.html', {'task': task})
 
